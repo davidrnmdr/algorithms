@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 void merge(int v[], int l, int r, int separator) {
-    //create two temp arrays to copy
+    //create two temp arrays
     int nl = separator - l + 1;
     int nr = r - separator;
     int L[nl], R[nr];
