@@ -14,6 +14,7 @@ node *newNode(int key)
     x->key = key;
     x->left = NULL;
     x->right = NULL;
+    return x;
 }
 
 // function that builds a binary search tree from an array
@@ -34,4 +35,85 @@ node *buildBST(int *v, int leftBound, int rightBound)
     root->right = buildBST(v, mid + 1, rightBound);
 
     return root;
+}
+
+node *search(node *root, int key)
+{
+    if (root->key == key || root == NULL)
+        return root;
+
+    if (key < root->key)
+    {
+        return search(root->left, key);
+    }
+    else
+        return search(root->right, key);
+}
+
+node *iterativeSearch(node *root, int key)
+{
+    while (root->key != key && root != NULL)
+    {
+        if (key < root->key)
+        {
+            root = root->left;
+        }
+        else
+            root = root->right;
+    }
+    return root;
+}
+
+node *treeMax(node *root)
+{
+    while (root->right != NULL)
+        root = root->right;
+
+    return root;
+}
+
+node *treeMin(node *root)
+{
+    while (root->left != NULL)
+        root = root->left;
+
+    return root;
+}
+
+void leftStep(node **root)
+{
+    *root = (*root)->left;
+}
+
+void rightStep(node **root)
+{
+    *root = (*root)->right;
+}
+
+void insert(node **root, int key)
+{
+    node *parent = NULL;
+
+    while ((*root) != NULL)
+    {
+        if (key < (*root)->key)
+        {
+            parent = *root;
+            leftStep(&(*root));
+        }
+        else
+        {
+            parent = *root;
+            rightStep(&(*root));
+        }
+    }
+
+    if (key < parent->key)
+    {
+        parent->left = newNode(key);
+    }
+    else
+    {
+        parent->right = newNode(key);
+    }
 }
